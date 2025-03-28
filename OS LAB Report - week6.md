@@ -48,3 +48,7 @@
 主要参考资料：[程序设计训练（Rust）](https://lab.cs.tsinghua.edu.cn/rust/)
 
 进一步熟悉并学习rust语言的语法和特性。
+
+## For next week
+
+- 64+
