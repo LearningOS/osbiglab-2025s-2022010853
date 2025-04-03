@@ -40,5 +40,5 @@ pub unsafe fn sys_writev(fd: c_int, iov: *const ctypes::iovec, iocnt: c_int) -> 
 ## For next week
 
 - 进一步熟悉 `rust`语言特性
-- 当前存在四个已实现测例在其他三个平台均可 `pass`，但是只是在 `x86_64`架构出现 `page_fault`，希望解决这个 `bug`，`score+=8`
+- 当前存在四个已实现测例在其他三个平台均可 `pass`，但是只是在 `x86_64`架构出现 `page_fault`，希望解决这个 `bug`，`score+=16`
 - 独自实现一个sys_call并通过测例，`score++`
