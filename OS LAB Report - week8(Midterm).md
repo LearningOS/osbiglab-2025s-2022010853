@@ -473,9 +473,6 @@ struct statx {
 
 在调试`glibc`的测例`fpclassify_invalid_ld80`过程中，发现本地`wsl`运行此测例行为和输出结果与在实验框架下相同，但流水线测评为`fail`，拿不到分数。
 
-![3e2956b402cca333766d9f65a7e8fd1](C:\Users\24463\Documents\WeChat Files\wxid_8m4jd880qqnk12\FileStorage\Temp\3e2956b402cca333766d9f65a7e8fd1.png)
-
-![311b98b21b06785f909bb4fb9fea402](C:\Users\24463\Documents\WeChat Files\wxid_8m4jd880qqnk12\FileStorage\Temp\311b98b21b06785f909bb4fb9fea402.png)
 
 经过沟通和确认发现`fpclassify_invalid_ld80`的测例代码在`x86_64`下编译工具链会出现问题，后联系了编写测评流水线的同学进行修改，相关负责同学及时进行修改，现在这个测例会自动判对，问题解决。
 
@@ -499,13 +496,9 @@ getdents success.
 
 之后阅读评测脚本发现脚本会判定输出的目录名长度大于1，但是目录名有可能为“.”，长度恰好为1导致判错，联系了编写测评流水线的同学进行修改，相关负责同学及时进行修改，判断改为大于等1，问题解决。
 
-![](C:\Users\24463\AppData\Roaming\Typora\typora-user-images\image-20250410111452642.png)
 
 在评测脚本中如果出现相同的行输出，会导致评测脚本正确输出统计量翻倍（4->8），导致错误，联系了编写测评流水线的同学进行修改，相关负责同学及时进行修改，问题解决。
 
-![7f2f2c8ea0edb936469b647dd2348cb](C:\Users\24463\Documents\WeChat Files\wxid_8m4jd880qqnk12\FileStorage\Temp\7f2f2c8ea0edb936469b647dd2348cb.png)
-
-![a337110da97c63220ed90dfd43f8e7b](C:\Users\24463\Documents\WeChat Files\wxid_8m4jd880qqnk12\FileStorage\Temp\a337110da97c63220ed90dfd43f8e7b.png)
 
 ## For next week
 
