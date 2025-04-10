@@ -328,6 +328,8 @@ pub fn sys_mkdir(path: UserConstPtr<c_char>, mode: u32) -> LinuxResult<isize> {
 
 ### sys_statx
 
+官方文档：[statx(2) - Linux manual page](https://man7.org/linux/man-pages/man2/statx.2.html)
+
 在重写了支持多个架构的`stat`系列函数之后，发现几个调用了stat系列`syscall`的测例除了`loongarch64`的三个架构都可以通过，仅有`loongarch64`架构出现fail，后调试研究发现仅有`loongarch`系列调用的`syscall`为`statx`，而`statx`我们并未进行重构，所以成功锁定问题在于`sys_statx`系统调用出现问题。
 
 ```rust
@@ -413,18 +415,54 @@ pub fn sys_statx(
 
 以及StatX结构体定义经过比对发现缺少一块大小为16的`pad`会导致解析错误，进行了填充修改。
 
+官方文档：[statx(2) - Linux manual page](https://man7.org/linux/man-pages/man2/statx.2.html)中缺少了这个`pad`的定义，之后的工作中要以C库的具体定义为准。
+
 ```rust
 #[repr(C)]
 #[derive(Debug, Default)]
 pub struct StatX {
 	//File mode (permissions).
     pub stx_mode: u16,
-    /// padding
+    /// padding(缺少)
     pub _pad0: u16,
     /// Inode number.
     pub stx_ino: u64,
    //...
 }
+// stat.h
+struct statx {
+	/* 0x00 */
+	__u32	stx_mask;	/* What results were written [uncond] */
+	__u32	stx_blksize;	/* Preferred general I/O size [uncond] */
+	__u64	stx_attributes;	/* Flags conveying information about the file [uncond] */
+	/* 0x10 */
+	__u32	stx_nlink;	/* Number of hard links */
+	__u32	stx_uid;	/* User ID of owner */
+	__u32	stx_gid;	/* Group ID of owner */
+	__u16	stx_mode;	/* File mode */
+	__u16	__spare0[1];
+	/* 0x20 */
+	__u64	stx_ino;	/* Inode number */
+	__u64	stx_size;	/* File size */
+	__u64	stx_blocks;	/* Number of 512-byte blocks allocated */
+	__u64	stx_attributes_mask; /* Mask to show what's supported in stx_attributes */
+	/* 0x40 */
+	struct statx_timestamp	stx_atime;	/* Last access time */
+	struct statx_timestamp	stx_btime;	/* File creation time */
+	struct statx_timestamp	stx_ctime;	/* Last attribute change time */
+	struct statx_timestamp	stx_mtime;	/* Last data modification time */
+	/* 0x80 */
+	__u32	stx_rdev_major;	/* Device ID of special file [if bdev/cdev] */
+	__u32	stx_rdev_minor;
+	__u32	stx_dev_major;	/* ID of device containing file [uncond] */
+	__u32	stx_dev_minor;
+	/* 0x90 */
+	__u64	stx_mnt_id;
+	__u64	__spare2;
+	/* 0xa0 */
+	__u64	__spare3[12];	/* Spare space for future expansion */
+	/* 0x100 */
+};
 ```
 
 
