@@ -22,13 +22,13 @@ aspace.check_region_access(region,zero_flag);
 参照BattiestStone4同学实现`socket`相关支持。
 
 ```rust
-		Sysno::setsockopt => sys_setsockopt(),
-        Sysno::sendto => sys_sendto(),
-        Sysno::recvfrom => sys_recvfrom(),
-        Sysno::shutdown => sys_shutdown(),
-        Sysno::listen => sys_listen(),
-        Sysno::accept => sys_accept(),
-        Sysno::connect => sys_connect(),
+Sysno::setsockopt => sys_setsockopt(),
+Sysno::sendto => sys_sendto(),
+Sysno::recvfrom => sys_recvfrom(),
+Sysno::shutdown => sys_shutdown(),
+Sysno::listen => sys_listen(),
+Sysno::accept => sys_accept(),
+Sysno::connect => sys_connect(),
 ```
 
 实现过程中，在BattiestStone4的热心帮助下，发现最终问题在于`sys_fcntl`缺乏在`F_GETFD`和`F_GETFL`这两种参数下的支持，添加后最终通过`libc`的`socket`测例。

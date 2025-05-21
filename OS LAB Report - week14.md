@@ -5,10 +5,10 @@
 不参考或移植他人仓库的情况下独立完成了`shared_memory`的真实现。
 
 ```rust
-        Sysno::shmget => sys_shmget(tf.arg0() as _, tf.arg1() as _, tf.arg2() as _),
-		Sysno::shmat => sys_shmat(tf.arg0() as _, tf.arg1() as _, tf.arg2() as _),
-        Sysno::shmctl => sys_shmctl(tf.arg0() as _, tf.arg1() as _, tf.arg2() as _),
-        Sysno::shmdt => sys_shmdt(tf.arg0() as _),
+Sysno::shmget => sys_shmget(tf.arg0() as _, tf.arg1() as _, tf.arg2() as _),
+Sysno::shmat => sys_shmat(tf.arg0() as _, tf.arg1() as _, tf.arg2() as _),
+Sysno::shmctl => sys_shmctl(tf.arg0() as _, tf.arg1() as _, tf.arg2() as _),
+Sysno::shmdt => sys_shmdt(tf.arg0() as _),
 ```
 
 并且相对`ByteOS`实现体现出以下优势：
