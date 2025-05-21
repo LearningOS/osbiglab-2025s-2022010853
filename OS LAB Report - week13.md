@@ -8,7 +8,7 @@
 aspace.protect(start_addr, length, permission_flags.into())?;
 ```
 
-于是我在`sys_mprotect`中调用`aspace`的`check_region_acces`s方法（但是给予的检验参数为`0`，理论上`region`如果被`map`过就应当返回`true`，否则`false`），用来验证内存块是否真的被`map`过。
+于是我在`sys_mprotect`中调用`aspace`的`check_region_access`方法（但是给予的检验参数为`0`，理论上`region`如果被`map`过就应当返回`true`，否则`false`），用来验证内存块是否真的被`map`过。
 
 ```rust
 let zero_flag = MappingFlags::READ - MappingFlags::READ;
