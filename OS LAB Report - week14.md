@@ -54,7 +54,7 @@ Sysno::shmdt => sys_shmdt(tf.arg0() as _),
   
   ```
 
-  `Rust`对于结构体的`Drop`机制中，先`Drop`结构体本身才会`Drop`成员变量，所以针对某个具体的共享内存段（对应一个`SharedMemory`结构体），在`Drop`最后一个映射到它的`MapedSharedMemory`时，强引用会有两个（一个是自己`MapedSharedMemory`结构体中随后要释放的成员变量，另一个是 `SHARED_MEMORY`全局表单中的引用），应该设置为`2`。
+  `Rust`对于结构体的`Drop`机制中，先`Drop`结构体本身才会`Drop`成员变量(参考[Drop 释放资源 - Rust语言圣经(Rust Course)](https://course.rs/advance/smart-pointer/drop.html))，所以针对某个具体的共享内存段（对应一个`SharedMemory`结构体），在`Drop`最后一个映射到它的`MapedSharedMemory`时，强引用会有两个（一个是自己`MapedSharedMemory`结构体中随后要释放的成员变量，另一个是 `SHARED_MEMORY`全局表单中的引用），应该设置为`2`。
 
   ```rust
   pub struct SharedMemory {
