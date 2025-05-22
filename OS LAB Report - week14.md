@@ -116,6 +116,7 @@ pub async fn sys_shmat(&self, shmid: usize, shmaddr: usize, shmflg: usize) -> Sy
 
 同时我们相对`ByteOS`还多实现了`sys_shmdt`，支持进程中途解绑一段共享内存，而`ByteOS`只支持在进程结束后释放`ProcessControlBlock`时才能解绑，我们的实现可以更及时地释放内存资源。
 
+特别地，我们发现由于Loongarch的内存布局和其他架构不同，需要给其分配更大的内存才足够通过测试。
 ## For next week
 
 - 重构和精简现在的代码结构—减少反复嵌套调用，位置混乱等现象
