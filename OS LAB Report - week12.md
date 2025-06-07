@@ -9,8 +9,6 @@
 
 原有框架下，iozone测试会发现写操作之后读回来结果错误，发现是默认线性映射的问题，全都加载到内核态，问题解决。
 
-![image-20250508203722758](C:\Users\24463\AppData\Roaming\Typora\typora-user-images\image-20250508203722758.png)
-
 ```rust
 //线性映射地址转换
 pub const fn virt_to_phys(vaddr: VirtAddr) -> PhysAddr {
@@ -35,8 +33,6 @@ pub fn write(&mut self, buf: &[u8]) -> AxResult<usize> {
     Ok(write_len)
 }
 ```
-
-![image-20250508204203466](C:\Users\24463\AppData\Roaming\Typora\typora-user-images\image-20250508204203466.png)
 
 ## 编写shm系列syscall框架
 
